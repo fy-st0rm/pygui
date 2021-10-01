@@ -88,7 +88,7 @@ class App:
 
 	def run(self):
 		while self.running:
-			clock.tick(30)
+			clock.tick(60)
 			self.screen.fill(bg_primary)
 
 			self.__event()

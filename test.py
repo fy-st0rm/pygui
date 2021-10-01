@@ -4,6 +4,7 @@ pygame.init()
 from entry import *
 from listbox import *
 from label import *
+from button import *
 
 
 width = 800
@@ -24,6 +25,9 @@ label2 = Label(listbox.listbox_surface, pygame.Rect(0, 0, 0, 0), "Hey", font, bo
 
 listbox.add_label(label)
 listbox.add_label(label2)
+
+button_r = pygame.Rect(400, 100, 200, 50)
+button = Button(screen, button_r, font, "Click me!",  (255, 255, 255), (165, 165, 165), (40, 40, 40))
 
 for i in range(20):
 	label = Label(listbox.listbox_surface, pygame.Rect(0, 0, 0, 0), str(i), font, border=True, bg = (15, 16, 21))
@@ -48,6 +52,10 @@ while running:
 			if event.key == pygame.K_RETURN:
 				print(entry.get_input())
 
+		#-- Button event
+		if button.is_clicked(event):
+			print("Clicked!")
+
 	#-- Updating rects
 	entry_r = pygame.Rect(100, 100, screen.get_width()/2 - 100, 50)
 	listbox_r = pygame.Rect(100, 200, screen.get_width() / 2 - 100, screen.get_height() - 250)
@@ -59,6 +67,7 @@ while running:
 	#-- Rendering widgets
 	entry.draw()
 	listbox.draw()
+	button.draw()
 	
 	pygame.display.update()
 

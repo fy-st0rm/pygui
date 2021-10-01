@@ -15,19 +15,21 @@ class Entry:
 		self.color = self.inactive_color
 		self.active = False
 
-		#-- Font 
-		self.input_text = ""
+		#-- Font
 		self.font = font
+		
+		#-- Text input 
+		self.input_text = ""
 		
 		self.text_texture = self.font.render(self.input_text, True, self.color)
 		self.text_pos = [5, self.rect.h / 2 - self.text_texture.get_rect().h / 2]
 
 		#-- Cursor
-		char = "a"
-		self.cursor_w = self.font.render(char, True, (0, 0, 0)).get_rect().w
-		self.cursor_x = self.text_texture.get_rect().w + self.cursor_w
+		self.cursor_x = 7
 		self.cursor_y = self.text_pos[1]
-
+		self.cursor_w = 5
+	
+		#-- Surface
 		self.entry_surface = pygame.Surface((self.rect.w, self.rect.h), pygame.SRCALPHA)
 
 	def get_input(self):
@@ -57,17 +59,14 @@ class Entry:
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_BACKSPACE:
 					self.input_text = self.input_text[:-1]
-
-					if self.input_text != "":
-						self.cursor_x -= self.cursor_w
-
+					
 					# Shifting text pos stuff idk
 					self.text_pos[0] += 32
 					if self.text_pos[0] > 5:
 						self.text_pos[0] = 5
 				else:
-					self.input_text += event.unicode
-					self.cursor_x += self.cursor_w
+					if event.unicode:
+						self.input_text += event.unicode
 
 	def draw(self):
 		self.text_texture = self.font.render(self.input_text, True, self.color)	
@@ -86,6 +85,7 @@ class Entry:
 		pygame.draw.rect(self.entry_surface, self.color, [0, 0, self.rect.w-1, self.rect.h-1], 2, self.curve)		
 	
 		#-- Rendering cursor
+		self.cursor_x = text_rect.w + 4
 		pygame.draw.rect(self.entry_surface, self.inactive_color, [self.cursor_x, self.cursor_y, self.cursor_w, self.text_texture.get_rect().h], border_radius = 2)
 
 
